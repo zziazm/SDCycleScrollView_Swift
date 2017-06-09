@@ -12,6 +12,11 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+     let v = SDCycleScrollView(frame: CGRect(x: 10, y: 100, width: 300, height: 300), placeholderImage: nil)
+     v.backgroundColor = UIColor.gray
+     self.view.addSubview(v)
+        
         // Do any additional setup after loading the view, typically from a nib.
     }
 

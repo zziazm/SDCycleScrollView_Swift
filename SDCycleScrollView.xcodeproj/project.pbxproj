@@ -14,6 +14,8 @@
 		984032F31EEA80AA004B3A1B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 984032F11EEA80AA004B3A1B /* LaunchScreen.storyboard */; };
 		984032FE1EEA80AA004B3A1B /* SDCycleScrollViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984032FD1EEA80AA004B3A1B /* SDCycleScrollViewTests.swift */; };
 		984033091EEA80AA004B3A1B /* SDCycleScrollViewUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984033081EEA80AA004B3A1B /* SDCycleScrollViewUITests.swift */; };
+		984033171EEA80FD004B3A1B /* SDCycleScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984033161EEA80FD004B3A1B /* SDCycleScrollView.swift */; };
+		9840331A1EEA8E26004B3A1B /* SDCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984033191EEA8E26004B3A1B /* SDCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +49,8 @@
 		984033041EEA80AA004B3A1B /* SDCycleScrollViewUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SDCycleScrollViewUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		984033081EEA80AA004B3A1B /* SDCycleScrollViewUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDCycleScrollViewUITests.swift; sourceTree = "<group>"; };
 		9840330A1EEA80AA004B3A1B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		984033161EEA80FD004B3A1B /* SDCycleScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SDCycleScrollView.swift; sourceTree = "<group>"; };
+		984033191EEA8E26004B3A1B /* SDCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SDCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +104,8 @@
 				984032E81EEA80AA004B3A1B /* AppDelegate.swift */,
 				984032EA1EEA80AA004B3A1B /* ViewController.swift */,
 				984032EC1EEA80AA004B3A1B /* Main.storyboard */,
+				984033161EEA80FD004B3A1B /* SDCycleScrollView.swift */,
+				984033191EEA8E26004B3A1B /* SDCollectionViewCell.swift */,
 				984032EF1EEA80AA004B3A1B /* Assets.xcassets */,
 				984032F11EEA80AA004B3A1B /* LaunchScreen.storyboard */,
 				984032F41EEA80AA004B3A1B /* Info.plist */,
@@ -261,6 +267,8 @@
 			files = (
 				984032EB1EEA80AA004B3A1B /* ViewController.swift in Sources */,
 				984032E91EEA80AA004B3A1B /* AppDelegate.swift in Sources */,
+				984033171EEA80FD004B3A1B /* SDCycleScrollView.swift in Sources */,
+				9840331A1EEA8E26004B3A1B /* SDCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
