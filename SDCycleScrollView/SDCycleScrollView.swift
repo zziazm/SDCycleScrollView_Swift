@@ -13,14 +13,27 @@ let ID = "cycleCell"
 class SDCycleScrollView: UIView, UICollectionViewDelegate, UICollectionViewDataSource {
     
     var totalItemCount: Int = 0
+    var infiniteLoop: Bool = true
     var imagePathsGroup: [String]?{
         get{
             return self.imagePathsGroup
         }
         set{
             
+            if let array = newValue {
+                totalItemCount = infiniteLoop ? array.count * 100 : array.count
+                if array.count != 1 {
+                    mainView?.isScrollEnabled = true
+                }else{
+                    mainView?.isScrollEnabled = false
+                }
+
+            }
+            
+            self.mainView?.reloadData()
         }
     }
+    
     var backgroundImageView: UIImageView?
     var placeholderImage: UIImage?{
         get{
@@ -56,8 +69,8 @@ class SDCycleScrollView: UIView, UICollectionViewDelegate, UICollectionViewDataS
         mainView.backgroundColor = UIColor.clear
         mainView.isPagingEnabled = true
         mainView.showsVerticalScrollIndicator = false
-        mainView.showsHorizontalScrollIndicator = false
-        mainView .register(SDCollectionViewCell.layerClass, forCellWithReuseIdentifier: ID)
+//        mainView.showsHorizontalScrollIndicator = false
+        mainView .register(SDCollectionViewCell.self, forCellWithReuseIdentifier: ID)
         mainView.delegate = self
         mainView.dataSource = self
         mainView.scrollsToTop = false
@@ -75,6 +88,7 @@ class SDCycleScrollView: UIView, UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell{
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ID, for: indexPath)
+        cell.backgroundColor = UIColor.red
         return cell
     }
 
@@ -101,8 +115,9 @@ class SDCycleScrollView: UIView, UICollectionViewDelegate, UICollectionViewDataS
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         
     }
-
-    /*
+    override func layoutSubviews() {
+        flowLayout?.itemSize = self.bounds.size
+    }    /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
     override func draw(_ rect: CGRect) {
