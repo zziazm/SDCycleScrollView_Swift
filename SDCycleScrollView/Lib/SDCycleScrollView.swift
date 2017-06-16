@@ -10,7 +10,7 @@ import UIKit
 
 typealias CallBack = (_ cycleScrollView:SDCycleScrollView, _ index: Int) -> Void
 
-private let rate = 2
+private let rate = 100
 private let ID = "cycleCell"
 
 protocol SDCycleScrollViewDelegate: class {
@@ -317,26 +317,6 @@ class SDCycleScrollView: UIView, UICollectionViewDelegate, UICollectionViewDataS
             }
         }
         
-        
-        
-//        
-//        let count = (self.imagePathsGroup?.count)!//infiniteLoop ? totalItemCount / rate : totalItemCount
-//        
-//        switch indexPath.row % count {
-//        case 0:
-//            cell.backgroundColor = UIColor.cyan
-//        case 1:
-//            cell.backgroundColor = UIColor.red
-//        case 2:
-//            cell.backgroundColor = UIColor.yellow
-//        case 3:
-//            cell.backgroundColor = UIColor.blue
-//
-//
-//        default:
-//            cell.backgroundColor = UIColor.black
-//
-//        }
         return cell
     }
     func setupClickItemOperationBlock(closure: CallBack) {
@@ -424,8 +404,15 @@ class SDCycleScrollView: UIView, UICollectionViewDelegate, UICollectionViewDataS
         if self.backgroundImageView != nil {
             self.backgroundImageView?.frame = self.bounds
         }
+    }
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        
+    }
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        
+    }
     
-    }    /*
+    /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
     override func draw(_ rect: CGRect) {

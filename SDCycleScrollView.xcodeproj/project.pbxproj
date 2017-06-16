@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		980B72841EEE2D5700BFF34E /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980B72831EEE2D5700BFF34E /* UIViewExtension.swift */; };
 		984032E91EEA80AA004B3A1B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984032E81EEA80AA004B3A1B /* AppDelegate.swift */; };
 		984032EB1EEA80AA004B3A1B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984032EA1EEA80AA004B3A1B /* ViewController.swift */; };
 		984032EE1EEA80AA004B3A1B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 984032EC1EEA80AA004B3A1B /* Main.storyboard */; };
@@ -15,8 +14,6 @@
 		984032F31EEA80AA004B3A1B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 984032F11EEA80AA004B3A1B /* LaunchScreen.storyboard */; };
 		984032FE1EEA80AA004B3A1B /* SDCycleScrollViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984032FD1EEA80AA004B3A1B /* SDCycleScrollViewTests.swift */; };
 		984033091EEA80AA004B3A1B /* SDCycleScrollViewUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984033081EEA80AA004B3A1B /* SDCycleScrollViewUITests.swift */; };
-		984033171EEA80FD004B3A1B /* SDCycleScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984033161EEA80FD004B3A1B /* SDCycleScrollView.swift */; };
-		9840331A1EEA8E26004B3A1B /* SDCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984033191EEA8E26004B3A1B /* SDCollectionViewCell.swift */; };
 		9843F12C1EEF877500185B57 /* AFError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9843F1181EEF877500185B57 /* AFError.swift */; };
 		9843F12D1EEF877500185B57 /* Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9843F11A1EEF877500185B57 /* Alamofire.swift */; };
 		9843F12E1EEF877500185B57 /* DispatchQueue+Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9843F11B1EEF877500185B57 /* DispatchQueue+Alamofire.swift */; };
@@ -47,6 +44,9 @@
 		9843F16D1EEF96D600185B57 /* UIButton+AlamofireImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9843F1621EEF96D600185B57 /* UIButton+AlamofireImage.swift */; };
 		9843F16E1EEF96D600185B57 /* UIImage+AlamofireImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9843F1631EEF96D600185B57 /* UIImage+AlamofireImage.swift */; };
 		9843F16F1EEF96D600185B57 /* UIImageView+AlamofireImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9843F1641EEF96D600185B57 /* UIImageView+AlamofireImage.swift */; };
+		985CA0AC1EF3D57300DAD1F0 /* SDCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985CA0A91EF3D57300DAD1F0 /* SDCollectionViewCell.swift */; };
+		985CA0AD1EF3D57300DAD1F0 /* SDCycleScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985CA0AA1EF3D57300DAD1F0 /* SDCycleScrollView.swift */; };
+		985CA0AE1EF3D57300DAD1F0 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985CA0AB1EF3D57300DAD1F0 /* UIViewExtension.swift */; };
 		98FB55D41EF0DAC6009817B6 /* pageControlDot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98FB55CA1EF0DAC6009817B6 /* pageControlDot@2x.png */; };
 		98FB55D51EF0DAC6009817B6 /* pageControlDot@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98FB55CB1EF0DAC6009817B6 /* pageControlDot@3x.png */; };
 		98FB55D61EF0DAC6009817B6 /* pageControlCurrentDot@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98FB55CC1EF0DAC6009817B6 /* pageControlCurrentDot@3x.png */; };
@@ -82,7 +82,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		980B72831EEE2D5700BFF34E /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		984032E51EEA80AA004B3A1B /* SDCycleScrollView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SDCycleScrollView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		984032E81EEA80AA004B3A1B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		984032EA1EEA80AA004B3A1B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -96,8 +95,6 @@
 		984033041EEA80AA004B3A1B /* SDCycleScrollViewUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SDCycleScrollViewUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		984033081EEA80AA004B3A1B /* SDCycleScrollViewUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDCycleScrollViewUITests.swift; sourceTree = "<group>"; };
 		9840330A1EEA80AA004B3A1B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		984033161EEA80FD004B3A1B /* SDCycleScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SDCycleScrollView.swift; sourceTree = "<group>"; };
-		984033191EEA8E26004B3A1B /* SDCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SDCollectionViewCell.swift; sourceTree = "<group>"; };
 		9843F1181EEF877500185B57 /* AFError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AFError.swift; sourceTree = "<group>"; };
 		9843F1191EEF877500185B57 /* Alamofire.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alamofire.h; sourceTree = "<group>"; };
 		9843F11A1EEF877500185B57 /* Alamofire.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alamofire.swift; sourceTree = "<group>"; };
@@ -130,6 +127,9 @@
 		9843F1621EEF96D600185B57 /* UIButton+AlamofireImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton+AlamofireImage.swift"; sourceTree = "<group>"; };
 		9843F1631EEF96D600185B57 /* UIImage+AlamofireImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+AlamofireImage.swift"; sourceTree = "<group>"; };
 		9843F1641EEF96D600185B57 /* UIImageView+AlamofireImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+AlamofireImage.swift"; sourceTree = "<group>"; };
+		985CA0A91EF3D57300DAD1F0 /* SDCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SDCollectionViewCell.swift; sourceTree = "<group>"; };
+		985CA0AA1EF3D57300DAD1F0 /* SDCycleScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SDCycleScrollView.swift; sourceTree = "<group>"; };
+		985CA0AB1EF3D57300DAD1F0 /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 		98FB55CA1EF0DAC6009817B6 /* pageControlDot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pageControlDot@2x.png"; sourceTree = "<group>"; };
 		98FB55CB1EF0DAC6009817B6 /* pageControlDot@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pageControlDot@3x.png"; sourceTree = "<group>"; };
 		98FB55CC1EF0DAC6009817B6 /* pageControlCurrentDot@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pageControlCurrentDot@3x.png"; sourceTree = "<group>"; };
@@ -195,15 +195,13 @@
 		984032E71EEA80AA004B3A1B /* SDCycleScrollView */ = {
 			isa = PBXGroup;
 			children = (
+				985CA0A81EF3D57300DAD1F0 /* Lib */,
 				98FB55C91EF0DAAD009817B6 /* SupportFile */,
 				9843F1581EEF96D600185B57 /* AlamofireImage */,
 				9843F1171EEF877500185B57 /* Alamofire */,
 				984032E81EEA80AA004B3A1B /* AppDelegate.swift */,
 				984032EA1EEA80AA004B3A1B /* ViewController.swift */,
 				984032EC1EEA80AA004B3A1B /* Main.storyboard */,
-				984033161EEA80FD004B3A1B /* SDCycleScrollView.swift */,
-				984033191EEA8E26004B3A1B /* SDCollectionViewCell.swift */,
-				980B72831EEE2D5700BFF34E /* UIViewExtension.swift */,
 				984032EF1EEA80AA004B3A1B /* Assets.xcassets */,
 				984032F11EEA80AA004B3A1B /* LaunchScreen.storyboard */,
 				984032F41EEA80AA004B3A1B /* Info.plist */,
@@ -273,6 +271,16 @@
 				9843F1641EEF96D600185B57 /* UIImageView+AlamofireImage.swift */,
 			);
 			path = AlamofireImage;
+			sourceTree = "<group>";
+		};
+		985CA0A81EF3D57300DAD1F0 /* Lib */ = {
+			isa = PBXGroup;
+			children = (
+				985CA0A91EF3D57300DAD1F0 /* SDCollectionViewCell.swift */,
+				985CA0AA1EF3D57300DAD1F0 /* SDCycleScrollView.swift */,
+				985CA0AB1EF3D57300DAD1F0 /* UIViewExtension.swift */,
+			);
+			path = Lib;
 			sourceTree = "<group>";
 		};
 		98FB55C91EF0DAAD009817B6 /* SupportFile */ = {
@@ -463,19 +471,19 @@
 				9843F16E1EEF96D600185B57 /* UIImage+AlamofireImage.swift in Sources */,
 				9843F13A1EEF877500185B57 /* SessionDelegate.swift in Sources */,
 				9843F1331EEF877500185B57 /* Notifications.swift in Sources */,
-				980B72841EEE2D5700BFF34E /* UIViewExtension.swift in Sources */,
+				985CA0AE1EF3D57300DAD1F0 /* UIViewExtension.swift in Sources */,
 				984032EB1EEA80AA004B3A1B /* ViewController.swift in Sources */,
 				9843F1671EEF96D600185B57 /* ImageCache.swift in Sources */,
 				9843F1381EEF877500185B57 /* Result.swift in Sources */,
 				9843F1361EEF877500185B57 /* Response.swift in Sources */,
 				984032E91EEA80AA004B3A1B /* AppDelegate.swift in Sources */,
 				9843F1341EEF877500185B57 /* ParameterEncoding.swift in Sources */,
-				984033171EEA80FD004B3A1B /* SDCycleScrollView.swift in Sources */,
+				985CA0AC1EF3D57300DAD1F0 /* SDCollectionViewCell.swift in Sources */,
 				9843F1391EEF877500185B57 /* ServerTrustPolicy.swift in Sources */,
 				9843F1691EEF96D600185B57 /* ImageFilter.swift in Sources */,
-				9840331A1EEA8E26004B3A1B /* SDCollectionViewCell.swift in Sources */,
 				9843F13D1EEF877500185B57 /* Timeline.swift in Sources */,
 				9843F13C1EEF877500185B57 /* TaskDelegate.swift in Sources */,
+				985CA0AD1EF3D57300DAD1F0 /* SDCycleScrollView.swift in Sources */,
 				9843F16C1EEF96D600185B57 /* Request+AlamofireImage.swift in Sources */,
 				9843F1311EEF877500185B57 /* MultipartFormData.swift in Sources */,
 				9843F1651EEF96D600185B57 /* AFIError.swift in Sources */,
