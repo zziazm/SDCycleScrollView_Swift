@@ -57,6 +57,11 @@
 		98FB55DB1EF0DAC6009817B6 /* h3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 98FB55D11EF0DAC6009817B6 /* h3.jpg */; };
 		98FB55DC1EF0DAC6009817B6 /* h2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 98FB55D21EF0DAC6009817B6 /* h2.jpg */; };
 		98FB55DD1EF0DAC6009817B6 /* h4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 98FB55D31EF0DAC6009817B6 /* h4.jpg */; };
+		98FB56651EF26702009817B6 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 98FB56611EF26702009817B6 /* 1.png */; };
+		98FB56661EF26702009817B6 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 98FB56621EF26702009817B6 /* 2.png */; };
+		98FB56671EF26702009817B6 /* 3.png in Resources */ = {isa = PBXBuildFile; fileRef = 98FB56631EF26702009817B6 /* 3.png */; };
+		98FB56681EF26702009817B6 /* 4.png in Resources */ = {isa = PBXBuildFile; fileRef = 98FB56641EF26702009817B6 /* 4.png */; };
+		98FB566A1EF26711009817B6 /* 5.png in Resources */ = {isa = PBXBuildFile; fileRef = 98FB56691EF26711009817B6 /* 5.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -135,6 +140,11 @@
 		98FB55D11EF0DAC6009817B6 /* h3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = h3.jpg; sourceTree = "<group>"; };
 		98FB55D21EF0DAC6009817B6 /* h2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = h2.jpg; sourceTree = "<group>"; };
 		98FB55D31EF0DAC6009817B6 /* h4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = h4.jpg; sourceTree = "<group>"; };
+		98FB56611EF26702009817B6 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
+		98FB56621EF26702009817B6 /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
+		98FB56631EF26702009817B6 /* 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3.png; sourceTree = "<group>"; };
+		98FB56641EF26702009817B6 /* 4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 4.png; sourceTree = "<group>"; };
+		98FB56691EF26711009817B6 /* 5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -268,6 +278,11 @@
 		98FB55C91EF0DAAD009817B6 /* SupportFile */ = {
 			isa = PBXGroup;
 			children = (
+				98FB56611EF26702009817B6 /* 1.png */,
+				98FB56621EF26702009817B6 /* 2.png */,
+				98FB56631EF26702009817B6 /* 3.png */,
+				98FB56641EF26702009817B6 /* 4.png */,
+				98FB56691EF26711009817B6 /* 5.png */,
 				98FB55CA1EF0DAC6009817B6 /* pageControlDot@2x.png */,
 				98FB55CB1EF0DAC6009817B6 /* pageControlDot@3x.png */,
 				98FB55CC1EF0DAC6009817B6 /* pageControlCurrentDot@3x.png */,
@@ -391,18 +406,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				9843F16A1EEF96D600185B57 /* Info-tvOS.plist in Resources */,
+				98FB56661EF26702009817B6 /* 2.png in Resources */,
 				984032F31EEA80AA004B3A1B /* LaunchScreen.storyboard in Resources */,
 				984032F01EEA80AA004B3A1B /* Assets.xcassets in Resources */,
 				98FB55D91EF0DAC6009817B6 /* placeholder@2x.png in Resources */,
 				98FB55D81EF0DAC6009817B6 /* 005.jpg in Resources */,
 				98FB55DB1EF0DAC6009817B6 /* h3.jpg in Resources */,
+				98FB56671EF26702009817B6 /* 3.png in Resources */,
+				98FB56681EF26702009817B6 /* 4.png in Resources */,
 				9843F12F1EEF877500185B57 /* Info-tvOS.plist in Resources */,
 				98FB55DA1EF0DAC6009817B6 /* h1.jpg in Resources */,
 				98FB55D61EF0DAC6009817B6 /* pageControlCurrentDot@3x.png in Resources */,
 				98FB55D71EF0DAC6009817B6 /* pageControlCurrentDot@2x.png in Resources */,
 				9843F1301EEF877500185B57 /* Info.plist in Resources */,
 				984032EE1EEA80AA004B3A1B /* Main.storyboard in Resources */,
+				98FB56651EF26702009817B6 /* 1.png in Resources */,
 				98FB55D51EF0DAC6009817B6 /* pageControlDot@3x.png in Resources */,
+				98FB566A1EF26711009817B6 /* 5.png in Resources */,
 				9843F16B1EEF96D600185B57 /* Info.plist in Resources */,
 				98FB55D41EF0DAC6009817B6 /* pageControlDot@2x.png in Resources */,
 				98FB55DD1EF0DAC6009817B6 /* h4.jpg in Resources */,

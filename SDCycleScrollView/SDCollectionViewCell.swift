@@ -2,14 +2,22 @@
 //  SDCollectionViewCell.swift
 //  SDCycleScrollView
 //
-//  Created by 赵铭 on 2017/6/9.
+//  Created by zm on 2017/6/9.
 //  Copyright © 2017年 zm. All rights reserved.
 //
 
 import UIKit
 
 class SDCollectionViewCell: UICollectionViewCell {
-    
+    var hasConfigured:Bool = false
+    var title: String?{
+        didSet{
+            titleLabel.text = title
+            if titleLabel.isHidden{
+                titleLabel.isHidden = false
+            }
+        }
+    }
     var titleLabel: UILabel
     var imageView: UIImageView
     var titleLabelBackgroundColor: UIColor?{
@@ -54,6 +62,7 @@ class SDCollectionViewCell: UICollectionViewCell {
         super.layoutSubviews()
         if  onlyDisplayText {
             titleLabel.frame = self.bounds
+            
         }else{
             imageView.frame = self.bounds
             let titleLabelW = self.width
@@ -62,6 +71,5 @@ class SDCollectionViewCell: UICollectionViewCell {
             titleLabel.frame = CGRect(x: 0, y: titleLabelY, width: titleLabelW, height: titleLabelH)
         }
     }
-    
     
 }

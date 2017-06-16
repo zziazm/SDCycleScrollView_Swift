@@ -2,7 +2,7 @@
 //  SDCycleScrollView.swift
 //  SDCycleScrollView
 //
-//  Created by 赵铭 on 2017/6/9.
+//  Created by zm on 2017/6/9.
 //  Copyright © 2017年 zm. All rights reserved.
 //
 
@@ -12,7 +12,6 @@ typealias CallBack = (_ cycleScrollView:SDCycleScrollView, _ index: Int) -> Void
 
 private let rate = 2
 private let ID = "cycleCell"
-
 
 protocol SDCycleScrollViewDelegate: class {
     func cycleScrollView(_ cycleScrollView: SDCycleScrollView, didSelectItemAt index: Int)
@@ -27,6 +26,40 @@ enum SDCycleScrollViewPageContolStyle {
 }
 
 class SDCycleScrollView: UIView, UICollectionViewDelegate, UICollectionViewDataSource {
+    var titleLabelBackgroundColor:UIColor?
+    var titleLabelHeight:CGFloat = 30.0
+    var titleLabelTextAlignment: NSTextAlignment = .left
+    var titleLabelTextColor: UIColor = UIColor.white
+    var titleLabelTextFont: UIFont = UIFont.systemFont(ofSize: 14)
+    var bannerImageViewContentMode: UIViewContentMode = .scaleToFill
+    var titlesGroup: [String]?{
+        didSet{
+            if let titles = titlesGroup {
+                if  onlyDisplayText{
+                    var tem = [String]()
+                    for _ in 0..<titles.count {
+                        tem.append("")
+                    }
+                    self.backgroundColor = UIColor.clear
+                    self.imageURLStringsGroup = tem
+                }
+            }
+        }
+    }
+    var autoScroll: Bool = true{
+        didSet{
+            self.invalidateTimer()
+            if autoScroll {
+                self.setupTimer()
+            }
+        }
+    }
+    
+    func invalidateTimer() {
+        timer?.invalidate()
+        timer = nil
+    }
+    
     var scrollDirection: UICollectionViewScrollDirection = .horizontal {
         didSet{
             flowLayout?.scrollDirection = scrollDirection;
@@ -66,7 +99,7 @@ class SDCycleScrollView: UIView, UICollectionViewDelegate, UICollectionViewDataS
     var timer: Timer?
     var totalItemCount: Int = 0
     var infiniteLoop: Bool = true
-    var autoScrollTimeInterval: TimeInterval = 3
+    var autoScrollTimeInterval: TimeInterval = 2
     var localizationImageNamesGroup: [String]?{
         didSet{
             self.imagePathsGroup = localizationImageNamesGroup
@@ -79,11 +112,14 @@ class SDCycleScrollView: UIView, UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func setupImagePathsGroup() {
+        self.invalidateTimer()
         if let array = imagePathsGroup {
             totalItemCount = infiniteLoop ? array.count * rate : array.count
             if array.count != 1 {
                 mainView?.isScrollEnabled = true
-                self.setupTimer()
+                if autoScroll {
+                    self.setupTimer()
+                }
             }else{
                 mainView?.isScrollEnabled = false
             }
@@ -94,33 +130,71 @@ class SDCycleScrollView: UIView, UICollectionViewDelegate, UICollectionViewDataS
     }
     
     var imageURLStringsGroup: [String]?{
-        get{
-            return self.imageURLStringsGroup
+//        get{
+//            return self.imageURLStringsGroup
+//        }
+//        set{
+//            self.imagePathsGroup = newValue
+//        }
+        didSet{
+            imagePathsGroup = imageURLStringsGroup
         }
-        set{
-            self.imagePathsGroup = newValue
-        }
+        
+        
     }
     var backgroundImageView: UIImageView?
-    var placeholderImage: UIImage?
+    var placeholderImage: UIImage?{
+        didSet{
+        self.setupPlaceholderImage()
+        }
+    }
+    func setupPlaceholderImage() {
+        if let image = placeholderImage {
+            self.setupBackgroundImageView(image:image)
+        }
+    }
+    
+    func setupBackgroundImageView(image: UIImage?)  {
+        if self.backgroundImageView == nil {
+            backgroundImageView = UIImageView()
+            backgroundImageView?.contentMode = .scaleAspectFit
+            self .insertSubview(backgroundImageView!, belowSubview: mainView!)
+            
+        }
+        self.backgroundImageView?.image = image
+    }
     var flowLayout: UICollectionViewFlowLayout?
     var mainView: UICollectionView?
     
-    init(frame: CGRect, placeholderImage: UIImage?) {
-        super .init(frame: frame)
-        self.placeholderImage = placeholderImage
-        self.initialization()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         self.setupMainView()
+
     }
     
-    init(frame: CGRect, shouldInfiniteLoop: Bool, imageNamesGroup:[String]) {
-        super.init(frame:frame)
+    convenience init(frame: CGRect, placeholderImage: UIImage?) {
+        self.init(frame: frame)
+        self.placeholderImage = placeholderImage
+        self.setupPlaceholderImage()
+        self.initialization()
+    }
+    
+    convenience init(frame: CGRect, shouldInfiniteLoop: Bool, imageNamesGroup:[String]) {
+        self.init(frame:frame)
         self.infiniteLoop = shouldInfiniteLoop
         self.localizationImageNamesGroup = imagePathsGroup
         self.imagePathsGroup = imageNamesGroup
         self.setupMainView()
         self.setupImagePathsGroup()
         
+    }
+    
+    convenience init(frame: CGRect, delegate: SDCycleScrollViewDelegate? , placeholderImage: UIImage?) {
+        self.init(frame: frame)
+        self.delegate = delegate
+        self.placeholderImage = placeholderImage
+        self.setupPlaceholderImage()
+        self.setupBackgroundImageView(image: placeholderImage)
     }
     
     func initialization() {
@@ -168,13 +242,20 @@ class SDCycleScrollView: UIView, UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func setupTimer ()  {
-        timer = Timer(timeInterval: autoScrollTimeInterval, target: self, selector: #selector(automaticScroll), userInfo: nil, repeats: true)
-        RunLoop.current.add(timer!, forMode:.commonModes)
+//        timer = Timer(timeInterval: autoScrollTimeInterval, target: self, selector: #selector(automaticScroll), userInfo: nil, repeats: true)
+//        RunLoop.current.add(timer!, forMode:.commonModes)
     }
     
     func currentIndex() -> Int {
         var index = 0
-        index = Int ( ((mainView?.contentOffset.x)! + (flowLayout?.itemSize.width)! / 2.0) / (flowLayout?.itemSize.width)!)
+        switch scrollDirection {
+        case .horizontal:
+            index = Int ( ((mainView?.contentOffset.x)! + (flowLayout?.itemSize.width)! / 2.0) / (flowLayout?.itemSize.width)!)
+
+        default:
+            index = Int (((mainView?.contentOffset.y)! + (flowLayout?.itemSize.height)!/2 ) / (flowLayout?.itemSize.height)!)
+        }
+        print("aaaaaaaaaaaaaaaaaaaaa\(index)")
         return index
     }
     
@@ -182,7 +263,14 @@ class SDCycleScrollView: UIView, UICollectionViewDelegate, UICollectionViewDataS
         if !infiniteLoop && targetIndex >= totalItemCount{
             return
         }
-        mainView?.scrollToItem(at: IndexPath(item: targetIndex, section: 0), at: .centeredHorizontally, animated: true)
+        var scrollPositon: UICollectionViewScrollPosition = .centeredHorizontally
+        if scrollDirection == .horizontal {
+            scrollPositon = .centeredHorizontally
+        } else {
+            scrollPositon = .centeredVertically
+        }
+        
+        mainView?.scrollToItem(at: IndexPath(item: targetIndex, section: 0), at:scrollPositon, animated: true)
     }
     
     func automaticScroll() {
@@ -204,9 +292,6 @@ class SDCycleScrollView: UIView, UICollectionViewDelegate, UICollectionViewDataS
             if !onlyDisplayText {
                 if let temImagePath = imagePath {
                     if  temImagePath.hasPrefix("http"){
-                        
-                        collectionCell.imageView.af_setImage(withURL: URL(string: temImagePath)!)
-                        
                         collectionCell.imageView.af_setImage(withURL: URL(string: temImagePath)!, placeholderImage: self.placeholderImage, filter: nil, progress: nil , progressQueue: DispatchQueue.main, imageTransition: .noTransition, runImageTransitionIfCached: false, completion: nil)
                     }else{
                         var  image = UIImage(named: temImagePath)
@@ -218,30 +303,40 @@ class SDCycleScrollView: UIView, UICollectionViewDelegate, UICollectionViewDataS
                 }
             }
             
-
-
+            collectionCell.title = titlesGroup?[itemIndex]
+            if !collectionCell.hasConfigured{
+                collectionCell.titleLabelBackgroundColor = self.titleLabelBackgroundColor
+                collectionCell.titleLabelHeight = self.titleLabelHeight
+                collectionCell.titleLabelTextAlignment = self.titleLabelTextAlignment
+                collectionCell.titleLabelTextFont = self.titleLabelTextFont
+                collectionCell.titleLableTextColor = self.titleLabelTextColor
+                collectionCell.hasConfigured  = true
+                collectionCell.imageView.contentMode = self.bannerImageViewContentMode
+                collectionCell.clipsToBounds = true
+                collectionCell.onlyDisplayText = self.onlyDisplayText
+            }
         }
         
         
         
-        
-        let count = (self.imagePathsGroup?.count)!//infiniteLoop ? totalItemCount / rate : totalItemCount
-        
-        switch indexPath.row % count {
-        case 0:
-            cell.backgroundColor = UIColor.cyan
-        case 1:
-            cell.backgroundColor = UIColor.red
-        case 2:
-            cell.backgroundColor = UIColor.yellow
-        case 3:
-            cell.backgroundColor = UIColor.blue
-
-
-        default:
-            cell.backgroundColor = UIColor.black
-
-        }
+//        
+//        let count = (self.imagePathsGroup?.count)!//infiniteLoop ? totalItemCount / rate : totalItemCount
+//        
+//        switch indexPath.row % count {
+//        case 0:
+//            cell.backgroundColor = UIColor.cyan
+//        case 1:
+//            cell.backgroundColor = UIColor.red
+//        case 2:
+//            cell.backgroundColor = UIColor.yellow
+//        case 3:
+//            cell.backgroundColor = UIColor.blue
+//
+//
+//        default:
+//            cell.backgroundColor = UIColor.black
+//
+//        }
         return cell
     }
     func setupClickItemOperationBlock(closure: CallBack) {
@@ -250,42 +345,48 @@ class SDCycleScrollView: UIView, UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
         let index = self.pageControlIndexWithCurrentCellIndex(index: indexPath.row)
         self.delegate?.cycleScrollView(self, didSelectItemAt: index)
-        
-        self.clickItemOperationBlock!(self, index)
+        if (self.clickItemOperationBlock != nil) {
+            self.clickItemOperationBlock!(self, index)
+        }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.x == CGFloat((totalItemCount - 1)) * (flowLayout?.itemSize.width)!  && infiniteLoop {
-           mainView!.scrollToItem(at: IndexPath(item: totalItemCount/2 - 1, section: 0), at: .centeredHorizontally, animated: false)
-            pageControl?.currentPage = totalItemCount/2 - 1
-            return
+        if scrollDirection == .horizontal && infiniteLoop {
+            if scrollView.contentOffset.x >= CGFloat((totalItemCount - 1)) * (flowLayout?.itemSize.width)!  && infiniteLoop {
+               
+                scrollView.setContentOffset( CGPoint(x:CGFloat((totalItemCount/2 - 1))*(flowLayout?.itemSize.width)!, y: 0), animated: false)
+            }
+            if scrollView.contentOffset.x <= 0.0 && infiniteLoop{
+                scrollView.setContentOffset( CGPoint(x:CGFloat((totalItemCount/2))*(flowLayout?.itemSize.width)!, y: 0), animated: false)
+                
+            }
+        } else if scrollDirection == .vertical && infiniteLoop {
+            if scrollView.contentOffset.y >= CGFloat((totalItemCount - 1)) * (flowLayout?.itemSize.height)!  && infiniteLoop {
+                scrollView.setContentOffset( CGPoint(x:0, y: CGFloat((totalItemCount/2 - 1))*(flowLayout?.itemSize.height)!), animated: false)
+            }
+            if scrollView.contentOffset.y <= 0 && infiniteLoop{
+                 scrollView.setContentOffset( CGPoint(x:0, y: CGFloat((totalItemCount/2))*(flowLayout?.itemSize.height)!), animated: false)
+            }
         }
-        if scrollView.contentOffset.x == 0 && infiniteLoop{
-             mainView!.scrollToItem(at: IndexPath(item: totalItemCount/2, section: 0), at: .centeredHorizontally, animated: false)
-            pageControl?.currentPage = totalItemCount/2
-            return
-        }
-        
         let index = self.pageControlIndexWithCurrentCellIndex(index: self.currentIndex())
         pageControl?.currentPage = index
+
         
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        
+        if self.autoScroll {
+            self.invalidateTimer()
+        }
+
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        
+        if self.autoScroll {
+            self.setupTimer()
+        }
     }
     
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        
-    }
-    
-    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
-        
-    }
     override func layoutSubviews() {
         flowLayout?.itemSize = self.bounds.size
         if mainView?.contentOffset.x == 0 && totalItemCount != 0{
@@ -295,11 +396,20 @@ class SDCycleScrollView: UIView, UICollectionViewDelegate, UICollectionViewDataS
             }else{
                 targetIndex = 0
             }
-             mainView?.scrollToItem(at: IndexPath(item: targetIndex, section: 0), at: .centeredHorizontally, animated: false)
+            var scrollPosition = UICollectionViewScrollPosition.centeredHorizontally
+            if scrollDirection == .vertical {
+                scrollPosition = .centeredVertically
+            }
+            
+            
+             mainView?.scrollToItem(at: IndexPath(item: targetIndex, section: 0), at:scrollPosition, animated: false)
             
         }
+        var size = CGSize(width: 0, height: 0)
+        if self.imagePathsGroup != nil {
+             size = CGSize(width: CGFloat((self.imagePathsGroup?.count)!) * self.pageControlDotSize.width * 1.5, height: self.pageControlDotSize.height)
+        }
         
-        let size = CGSize(width: CGFloat((self.imagePathsGroup?.count)!) * self.pageControlDotSize.width * 1.5, height: self.pageControlDotSize.height)
         var x = (self.width - size.width)*0.5
         if self.pageControlAliment == .AlimentRight{
             x = self.width - size.width - 10.0
@@ -311,6 +421,9 @@ class SDCycleScrollView: UIView, UICollectionViewDelegate, UICollectionViewDataS
         pageControlFrame.origin.x -= self.pageControlRightOffset
         self.pageControl?.frame = pageControlFrame
 
+        if self.backgroundImageView != nil {
+            self.backgroundImageView?.frame = self.bounds
+        }
     
     }    /*
     // Only override draw() if you perform custom drawing.
