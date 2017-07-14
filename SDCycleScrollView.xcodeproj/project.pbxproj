@@ -276,8 +276,8 @@
 		985CA0A81EF3D57300DAD1F0 /* Lib */ = {
 			isa = PBXGroup;
 			children = (
-				985CA0A91EF3D57300DAD1F0 /* SDCollectionViewCell.swift */,
 				985CA0AA1EF3D57300DAD1F0 /* SDCycleScrollView.swift */,
+				985CA0A91EF3D57300DAD1F0 /* SDCollectionViewCell.swift */,
 				985CA0AB1EF3D57300DAD1F0 /* UIViewExtension.swift */,
 			);
 			path = Lib;

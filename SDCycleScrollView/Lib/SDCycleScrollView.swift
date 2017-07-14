@@ -8,13 +8,13 @@
 
 import UIKit
 
-typealias CallBack = (_ cycleScrollView:SDCycleScrollView, _ index: Int) -> Void
-
 private let rate = 100
 private let ID = "cycleCell"
 
-protocol SDCycleScrollViewDelegate: class {
-    func cycleScrollView(_ cycleScrollView: SDCycleScrollView, didSelectItemAt index: Int)
+typealias CallBack = (_ cycleScrollView:SDCycleScrollView, _ index: Int) -> Void
+
+@objc protocol SDCycleScrollViewDelegate {
+ @objc optional func cycleScrollView(_ cycleScrollView: SDCycleScrollView, didSelectItemAt index: Int)
 }
 
 enum SDCycleScrollViewPageContolAliment {
@@ -25,7 +25,7 @@ enum SDCycleScrollViewPageContolStyle {
     case StyleClassic,StyleNone
 }
 
-class SDCycleScrollView: UIView, UICollectionViewDelegate, UICollectionViewDataSource {
+ class SDCycleScrollView: UIView, UICollectionViewDelegate, UICollectionViewDataSource {
     var titleLabelBackgroundColor:UIColor?
     var titleLabelHeight:CGFloat = 30.0
     var titleLabelTextAlignment: NSTextAlignment = .left
@@ -324,7 +324,7 @@ class SDCycleScrollView: UIView, UICollectionViewDelegate, UICollectionViewDataS
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
         let index = self.pageControlIndexWithCurrentCellIndex(index: indexPath.row)
-        self.delegate?.cycleScrollView(self, didSelectItemAt: index)
+        self.delegate?.cycleScrollView?(self, didSelectItemAt: index)
         if (self.clickItemOperationBlock != nil) {
             self.clickItemOperationBlock!(self, index)
         }
