@@ -8,7 +8,7 @@
 
 import UIKit
 
-private let rate = 100
+private let rate = 500
 private let ID = "cycleCell"
 
 typealias CallBack = (_ cycleScrollView:SDCycleScrollView, _ index: Int) -> Void
@@ -17,28 +17,55 @@ typealias CallBack = (_ cycleScrollView:SDCycleScrollView, _ index: Int) -> Void
  @objc optional func cycleScrollView(_ cycleScrollView: SDCycleScrollView, didSelectItemAt index: Int)
 }
 
-enum SDCycleScrollViewPageContolAliment {
+public enum SDCycleScrollViewPageContolAliment: Int{
     case AlimentRight, AlimentCenter
 }
 
-enum SDCycleScrollViewPageContolStyle {
+public enum SDCycleScrollViewPageContolStyle: Int{
     case StyleClassic,StyleNone
 }
 
- class SDCycleScrollView: UIView, UICollectionViewDelegate, UICollectionViewDataSource {
-    var titleLabelBackgroundColor:UIColor?
-    var titleLabelHeight:CGFloat = 30.0
-    var titleLabelTextAlignment: NSTextAlignment = .left
-    var titleLabelTextColor: UIColor = UIColor.white
-    var titleLabelTextFont: UIFont = UIFont.systemFont(ofSize: 14)
-    var bannerImageViewContentMode: UIViewContentMode = .scaleToFill
+class SDCycleScrollView: UIView, UICollectionViewDelegate, UICollectionViewDataSource {
+    class func cycleScrollView(frame: CGRect, delegate: SDCycleScrollViewDelegate?,placeholderImage: UIImage?) -> SDCycleScrollView {
+        let cycleScrollView = SDCycleScrollView(frame: frame)
+        cycleScrollView.delegate = delegate
+        cycleScrollView.placeholderImage = placeholderImage
+        return cycleScrollView;
+    }
+   
+    class func cycleScrollView(frame: CGRect, imageURLStringsGroup: [String]) -> SDCycleScrollView {
+        let cycleScrollView = SDCycleScrollView(frame: frame)
+        cycleScrollView.imageURLStringsGroup = imageURLStringsGroup
+        return cycleScrollView;
+    }
+    
+    class func cycleScrollView(frame: CGRect, imageNamesGroup:[String]) -> SDCycleScrollView {
+        let cycleScrollView = SDCycleScrollView(frame: frame)
+        cycleScrollView.localizationImageNamesGroup = imageNamesGroup
+        return cycleScrollView;
+    }
+    
+    class func cycleScrollViewWithFrame(frame: CGRect, shouldInfiniteLoop: Bool, imageNamesGroup: [String]) -> SDCycleScrollView {
+        let cycleScrollView = SDCycleScrollView(frame: frame)
+        cycleScrollView.infiniteLoop = shouldInfiniteLoop
+        cycleScrollView.localizationImageNamesGroup = imageNamesGroup
+        return cycleScrollView;
+    }
+    
+    /// 网络图片 url string 数组
+    var imageURLStringsGroup: [String]?{
+        didSet{
+            imagePathsGroup = imageURLStringsGroup
+        }
+    }
+    
+    ///每张图片对应要显示的文字数组
     var titlesGroup: [String]?{
         didSet{
             if let titles = titlesGroup {
                 if  onlyDisplayText{
-                    var tem = [String]()
-                    for _ in 0..<titles.count {
-                        tem.append("")
+                    let tem = titles.map{_ in
+                        ""
                     }
                     self.backgroundColor = UIColor.clear
                     self.imageURLStringsGroup = tem
@@ -46,6 +73,21 @@ enum SDCycleScrollViewPageContolStyle {
             }
         }
     }
+    
+    ///本地图片数组
+    var localizationImageNamesGroup: [String]?{
+        didSet{
+            self.imagePathsGroup = localizationImageNamesGroup
+        }
+    }
+    
+    ///自动滚动间隔时间,默认2s
+    var autoScrollTimeInterval: TimeInterval = 2
+
+    ///是否无限循环,默认Yes
+    var infiniteLoop: Bool = true
+
+    ///是否无限循环,默认Yes
     var autoScroll: Bool = true{
         didSet{
             self.invalidateTimer()
@@ -55,20 +97,72 @@ enum SDCycleScrollViewPageContolStyle {
         }
     }
     
-    func invalidateTimer() {
-        timer?.invalidate()
-        timer = nil
-    }
-    
+    ///图片滚动方向，默认为水平滚动
     var scrollDirection: UICollectionViewScrollDirection = .horizontal {
         didSet{
             flowLayout?.scrollDirection = scrollDirection;
         }
     }
-    var pageControlStyle: SDCycleScrollViewPageContolStyle = .StyleClassic
+
     weak var delegate: SDCycleScrollViewDelegate?
+
+    ///block方式监听点击
     var clickItemOperationBlock: CallBack?
+
+    ///轮播图片的ContentMode，默认为 UIViewContentModeScaleToFill
+    var bannerImageViewContentMode: UIViewContentMode = .scaleToFill
+
+    ///占位图，用于网络未加载到图片时
+    var placeholderImage: UIImage?{
+        didSet{
+            self.setupPlaceholderImage()
+        }
+    }
+    
+    ///是否显示分页控件
+    var showPageControl: Bool = true {
+        didSet{
+            self.pageControl?.isHidden = !showPageControl
+        }
+    }
+    ///是否在只有一张图时隐藏pagecontrol，默认为YES
+    var hidesForSinglePage: Bool = true
+    
+    ///只展示文字轮播
     var onlyDisplayText: Bool = false
+    
+    ///pagecontrol 样式，默认为系统样式
+    var pageControlStyle: SDCycleScrollViewPageContolStyle = .StyleClassic
+    
+    ///分页控件位置
+    var pageControlAliment: SDCycleScrollViewPageContolAliment = .AlimentCenter
+
+    ///分页控件距离轮播图的底部间距（在默认间距基础上）的偏移量
+    var pageControlBottomOffset: CGFloat = 0.0
+    
+    ///分页控件距离轮播图的右边间距（在默认间距基础上）的偏移量
+    var pageControlRightOffset: CGFloat = 0.0
+
+    ///轮播文字label字体颜色
+    var titleLabelTextColor: UIColor = UIColor.white
+
+    ///轮播文字label字体大小
+    var titleLabelTextFont: UIFont = UIFont.systemFont(ofSize: 14)
+    
+    ///轮播文字label背景颜色
+    var titleLabelBackgroundColor:UIColor?
+    
+    ///轮播文字label高度
+    var titleLabelHeight:CGFloat = 30.0
+    
+    ///轮播文字label对齐方式
+    var titleLabelTextAlignment: NSTextAlignment = .left
+    
+    func invalidateTimer() {
+        timer?.invalidate()
+        timer = nil
+    }
+    
     var currentPageDotColor: UIColor?{
         get {
            return self.pageControl?.currentPageIndicatorTintColor
@@ -86,25 +180,11 @@ enum SDCycleScrollViewPageContolStyle {
             self.pageControl?.currentPageIndicatorTintColor = newValue
         }
     }
-    var pageControlAliment = SDCycleScrollViewPageContolAliment.AlimentCenter
-    var showPageControl: Bool = true {
-        didSet{
-            self.pageControl?.isHidden = !showPageControl
-        }
-    }
+   
     var pageControlDotSize = CGSize(width: 10.0, height: 10.0)
-    var pageControlBottomOffset: CGFloat = 0.0
-    var pageControlRightOffset: CGFloat = 0.0
     var pageControl: UIPageControl?
     var timer: Timer?
     var totalItemCount: Int = 0
-    var infiniteLoop: Bool = true
-    var autoScrollTimeInterval: TimeInterval = 2
-    var localizationImageNamesGroup: [String]?{
-        didSet{
-            self.imagePathsGroup = localizationImageNamesGroup
-        }
-    }
     var imagePathsGroup: [String]?{
         didSet{
             self.setupImagePathsGroup()
@@ -129,25 +209,8 @@ enum SDCycleScrollViewPageContolStyle {
         self.mainView?.reloadData()
     }
     
-    var imageURLStringsGroup: [String]?{
-//        get{
-//            return self.imageURLStringsGroup
-//        }
-//        set{
-//            self.imagePathsGroup = newValue
-//        }
-        didSet{
-            imagePathsGroup = imageURLStringsGroup
-        }
-        
-        
-    }
     var backgroundImageView: UIImageView?
-    var placeholderImage: UIImage?{
-        didSet{
-        self.setupPlaceholderImage()
-        }
-    }
+    
     func setupPlaceholderImage() {
         if let image = placeholderImage {
             self.setupBackgroundImageView(image:image)
@@ -204,7 +267,11 @@ enum SDCycleScrollViewPageContolStyle {
             pageControl?.removeFromSuperview()
         }
         
-        if self.imagePathsGroup?.count == 0 || self.imagePathsGroup?.count == 1 {
+        if (self.imagePathsGroup?.count == 0 || self.onlyDisplayText) {
+            return
+        }
+        
+        if self.imagePathsGroup?.count == 1 && self.hidesForSinglePage {
             return
         }
         let indexOnPageControl = self.pageControlIndexWithCurrentCellIndex(index: self.currentIndex())
@@ -219,7 +286,7 @@ enum SDCycleScrollViewPageContolStyle {
         return (index % (imagePathsGroup?.count)!)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -242,8 +309,8 @@ enum SDCycleScrollViewPageContolStyle {
     }
     
     func setupTimer ()  {
-//        timer = Timer(timeInterval: autoScrollTimeInterval, target: self, selector: #selector(automaticScroll), userInfo: nil, repeats: true)
-//        RunLoop.current.add(timer!, forMode:.commonModes)
+        timer = Timer(timeInterval: autoScrollTimeInterval, target: self, selector: #selector(automaticScroll), userInfo: nil, repeats: true)
+        RunLoop.current.add(timer!, forMode:.commonModes)
     }
     
     func currentIndex() -> Int {
@@ -279,7 +346,7 @@ enum SDCycleScrollViewPageContolStyle {
         self.scrollToIndex(targetIndex: targetIndex)
         
     }
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
         return totalItemCount
     }
     
@@ -367,7 +434,7 @@ enum SDCycleScrollViewPageContolStyle {
         }
     }
     
-    override func layoutSubviews() {
+    override public func layoutSubviews() {
         flowLayout?.itemSize = self.bounds.size
         if mainView?.contentOffset.x == 0 && totalItemCount != 0{
             var targetIndex = 0

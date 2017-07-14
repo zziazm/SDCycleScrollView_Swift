@@ -195,10 +195,10 @@
 		984032E71EEA80AA004B3A1B /* SDCycleScrollView */ = {
 			isa = PBXGroup;
 			children = (
+				9843F1171EEF877500185B57 /* Alamofire */,
+				9843F1581EEF96D600185B57 /* AlamofireImage */,
 				985CA0A81EF3D57300DAD1F0 /* Lib */,
 				98FB55C91EF0DAAD009817B6 /* SupportFile */,
-				9843F1581EEF96D600185B57 /* AlamofireImage */,
-				9843F1171EEF877500185B57 /* Alamofire */,
 				984032E81EEA80AA004B3A1B /* AppDelegate.swift */,
 				984032EA1EEA80AA004B3A1B /* ViewController.swift */,
 				984032EC1EEA80AA004B3A1B /* Main.storyboard */,
